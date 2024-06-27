@@ -1,0 +1,117 @@
+{{define "editar"}} {{template "cabecera"}}
+
+<div class="card">
+  <div class="card-header">Usuario</div>
+
+  <div class="card-body">
+    <form method="post" action="/actualizar" onsubmit="return validarContraseña()">
+      <div class="form-group">
+        <label for="">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nombre"
+          value={{.Nombre}}
+          id="nombre"
+          aria-describedby="helpId"
+          placeholder="Ingresa tu nombre"
+        />
+        <small id="helpId" class="form-text text-muted"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="">correo</label>
+        <input
+          type="email"
+          class="form-control"
+          name="correo"
+          value={{.Correo}}
+          id="correo"
+          aria-describedby="emailHelpId"
+          placeholder="Ingresa tu direccion de correo electronico"
+        />
+        <small id="emailHelpId" class="form-text text-muted"></small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input
+          name="contraseña"
+          value={{.Contraseña}}
+          type="password"
+          class="form-control"
+          id="contraseña"
+        />
+      </div>
+
+      
+
+      <div class="form-group">
+        <label for="nombreInput">Telefono</label>
+        <input
+          type="text"
+          class="form-control"
+          name="telefono"
+          value={{.Telefono}}
+          id="nombreInput"
+          aria-describedby="helpId"
+          placeholder="Ingresa tu telefono"
+        />
+        <small id="helpId" class="form-text text-muted"></small>
+      </div>
+
+      <script>
+        const nombreInput = document.getElementById("nombreInput");
+
+        nombreInput.addEventListener("input", function () {
+          const regex = /[0-9]/; // Regular expression for numbers
+          let newValue = nombreInput.value.replace(/[^0-9]/g, ""); // Replace non-numbers with empty string
+          nombreInput.value = newValue; // Update the input value
+        });
+      </script>
+
+      <div class="form-group">
+        <label for="">Imagen</label>
+        <input
+          type="file"
+          class="form-control-file"
+          name="imagen"
+          value={{.Imagen}}
+          id="imagen"
+          placeholder=""
+          aria-describedby="fileHelpId"
+        />
+        <small id="fileHelpId" class="form-text text-muted"></small>
+      </div>
+
+      <script>
+        const contraseña = document.getElementById("contraseña").value;
+      
+        function validarContraseña(contraseña) {
+          alert("HOLA")
+          const regex = /.{8,}(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_-=+{}|;:'"/<>,.?])/;
+      
+          return regex.test(contraseña);
+        }
+      
+        if (validarContraseña(contraseña)) {
+          alert("Contraseña válida");
+        } else {
+          alert(
+            "Contraseña no válida. Debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un caracter especial."
+          );
+        }
+      
+      </script>
+
+      <button type="submit" class="btn btn-primary">
+        Modificar
+      </button>
+    </form>
+  </div>
+  <div class="card-footer text-muted">Footer</div>
+</div>
+
+
+
+{{template "pie"}} {{end}}
