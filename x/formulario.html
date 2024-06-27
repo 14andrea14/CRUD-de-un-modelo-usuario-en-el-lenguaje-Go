@@ -1,83 +1,114 @@
-{{define "formulario"}}
-{{template "cabecera"}}
-
+{{define "formulario"}} {{template "cabecera"}}
+<body>
 <div class="card">
-    <div class="card-header">
-        Usuario
-    </div>
-    
-    <div class="card-body">
-        <form method="post" action="/insertar">
-        
-        <div class="form-group">
-          <label for="">Nombre</label>
-          <input type="text"
-            class="form-control" name="nombre" id="nombre" aria-describedby="helpId" placeholder="Ingresa tu nombre">
-          <small id="helpId" class="form-text text-muted"></small>
-        </div>
-        
-        <div class="form-group">
-          <label for="">correo</label>
-          <input type="email" class="form-control" name="correo" id="correo" aria-describedby="emailHelpId" placeholder="Ingresa tu direccion de correo electronico">
-          <small id="emailHelpId" class="form-text text-muted"></small>
-        </div>
+  <div class="card-header">Usuario</div>
 
-        <div class="form-group">
-          <label for="passwordInput">Contraseña</label>
-          <input type="password" class="form-control" name="contraseña" id="passwordInput" placeholder="Ingresa tu contraseña">
-          <div id="passwordFeedback" class="form-text text-muted"> La contraseña debe contener al menos una mayuscula, una minuscula, un numero y un caracter especial </div>
-        </div>
+  <div class="card-body">
+    <form method="post" action="/insertar" onsubmit="return validarContraseña(this)">
+      <div class="form-group">
+        <label for="">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nombre"
+          id="nombre"
+          aria-describedby="helpId"
+          placeholder="Ingresa tu nombre"
+        />
+        <small id="helpId" class="form-text text-muted"></small>
+      </div>
 
-        <script>
-const passwordInput = document.getElementById('passwordInput');
-const passwordFeedback = document.getElementById('passwordFeedback');
+      <div class="form-group">
+        <label for="">correo</label>
+        <input
+          type="email"
+          class="form-control"
+          name="correo"
+          id="correo"
+          aria-describedby="emailHelpId"
+          placeholder="Ingresa tu direccion de correo electronico"
+        />
+        <small id="emailHelpId" class="form-text text-muted"></small>
+      </div>
 
-passwordInput.addEventListener('keyup', function() {
-  const passwordValue = this.value;
-  const regex = /.{8,}(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_-=+{}|;:'"/<>,.?])/g;
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input
+          name="contraseña"
+          type="password"
+          class="form-control"
+          id="contraseña"
+        />
+      </div>
 
-  if (regex.test(passwordValue)) {
-    passwordFeedback.classList.remove('text-danger');
-    passwordFeedback.classList.add('text-success');
-    passwordFeedback.textContent = 'Contraseña válida';
-  } else {
-    passwordFeedback.classList.remove('text-success');
-    passwordFeedback.classList.add('text-danger');
-    passwordFeedback.textContent = 'La contraseña debe contener al menos una mayuscula, una minuscula, un numero y un caracter especial';
-  }
-});
-</script>
-          
-        <div class="form-group">
-          <label for="nombreInput">Telefono</label>
-          <input type="text" class="form-control" name="telefono" id="nombreInput" aria-describedby="helpId" placeholder="Ingresa tu telefono">
-          <small id="helpId" class="form-text text-muted"></small>
-        </div>
-        
-        <script>
-          const nombreInput = document.getElementById('nombreInput');
-        
-          nombreInput.addEventListener('input', function() {
-            const regex = /[0-9]/; // Regular expression for numbers
-            let newValue = nombreInput.value.replace(/[^0-9]/g, ''); // Replace non-numbers with empty string
-            nombreInput.value = newValue; // Update the input value
-          });
-        </script>
+      
 
-        <div class="form-group">
-          <label for="">Imagen</label>
-          <input type="file" class="form-control-file" name="imagen" id="imagen" placeholder="" aria-describedby="fileHelpId">
-          <small id="fileHelpId" class="form-text text-muted"></small>
-        </div>
+      <div class="form-group">
+        <label for="nombreInput">Telefono</label>
+        <input
+          type="text"
+          class="form-control"
+          name="telefono"
+          id="nombreInput"
+          aria-describedby="helpId"
+          placeholder="Ingresa tu telefono"
+        />
+        <small id="helpId" class="form-text text-muted"></small>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Agregar nuevo Usuario</button>
+      <script>
+        const nombreInput = document.getElementById("nombreInput");
 
-        </form>
-    </div>
-    <div class="card-footer text-muted">
-        Footer
-    </div>
+        nombreInput.addEventListener("input", function () {
+          const regex = /[0-9]/; // Regular expression for numbers
+          let newValue = nombreInput.value.replace(/[^0-9]/g, ""); // Replace non-numbers with empty string
+          nombreInput.value = newValue; // Update the input value
+        });
+      </script>
+
+      <div class="form-group">
+        <label for="">Imagen</label>
+        <input
+          type="file"
+          class="form-control-file"
+          name="imagen"
+          id="imagen"
+          placeholder=""
+          aria-describedby="fileHelpId"
+        />
+        <small id="fileHelpId" class="form-text text-muted"></small>
+      </div>
+
+     
+
+      <button type="submit" class="btn btn-primary">
+        Agregar nuevo Usuario
+      </button>
+    </form>
+  </div>
+  <div class="card-footer text-muted">Footer</div>
 </div>
 
-{{template "pie"}}
-{{end}}
+  
+</body>
+<script>
+  const contraseña = document.getElementById("contraseña").value;
+
+  function validarContraseña() {
+    const regex = /.{8,}(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_-=+{}|;:'"/<>,.?])/;
+
+    return regex.test(contraseña);
+  }
+
+  if (validarContraseña(contraseña)) {
+    alert("Contraseña válida");
+  } else {
+    alert(
+      "Contraseña no válida. Debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un caracter especial."
+    );
+  }
+
+</script>
+
+
+{{template "pie"}} {{end}}
