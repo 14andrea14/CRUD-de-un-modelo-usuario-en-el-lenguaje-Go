@@ -1,23 +1,33 @@
 package main
 
 import (
-	"fmt"
-	"github.com/gofiber/fiber/v2"
+	//"fmt"      //formateo de lo que se esta manipulando
+	"html/template"
+	"log"      //monitoreo de terminal
+	"net/http" //webb
+	//separacion de la informacion en templates
 )
 
-type User struct {
-    Username string `validate:"required"`
-    Email    string `validate:"required,email"`
-    Phone    string `validate:"required"`
-    Password string `validate:"required"`
-}
+var plantillas = template.Must(template.ParseGlob("x/*"))
 
 func main() {
-	app := fiber.New()
-	// Sirve el archivo index.html desde la carpeta "public"
-	app.Static("/", "./public")
+	http.HandleFunc("/", Inicio) //Acceder a la funcion inicio
+	http.HandleFunc("/formulario", Formulario)
 
-	// Escucha en el puerto 3000
-	app.Listen(":4000")
-	fmt.Println("Servidor en el puerto 4000")
-}	
+	log.Println("servidor corriendo...") //mensaje a la terminal
+
+	err := http.ListenAndServe(":8080", nil) //inicializacion del servidor
+	if err != nil {
+		log.Fatalf("No se pudo iniciar el servidor: %s\n", err)
+	}
+}
+
+func Inicio(w http.ResponseWriter, r *http.Request) { //envio y rercibo de info w y r
+	//fmt.Fprintf(w, "dios matenme") //mandando mensaje al navegador
+	plantillas.ExecuteTemplate(w, "inicio", nil)
+}
+
+func Formulario(w http.ResponseWriter, r *http.Request) { //envio y rercibo de info w y r
+	//fmt.Fprintf(w, "dios matenme") //mandando mensaje al navegador
+	plantillas.ExecuteTemplate(w, "formulario", nil)
+}
