@@ -1,28 +1,53 @@
-{{define "inicio"}}
-{{template "cabecera"}}
+{{define "inicio"}} {{template "cabecera"}}
 
-   <a name="" id="" class="btn btn-primary" href="/formulario" role="button">Agregar usuario</a>
+<a name="" id="" class="btn btn-primary" href="/formulario" role="button"
+  >Agregar usuario</a
+>
 
 <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Contraseña</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td> Alejandra </td>
-                <td> alejandra.arismendi1@gmail.com </td>
-                <td> aaaa </td>
-                <td> Editar | Borrar </td>
-            </tr>
-            
-        </tbody>
-    </table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Contraseña</th>
+      <th>Telefono</th>
+      <th>Imagen</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{range.}}
+    <tr>
+      <td>{{.Id}}</td>
+      <td>{{.Nombre}}</td>
+      <td>{{.Correo}}</td>
+      <td>{{.Contraseña}}</td>
+      <td>{{.Telefono}}</td>
+      <td>{{.Imagen}}</td>
+      <td>
+        <a
+          name=""
+          id=""
+          class="btn btn-warning"
+          href="/editar?Id={{.Id}}"
+          role="button"
+          >Editar</a
+        >
+        |
+        <a
+          name=""
+          id=""
+          class="btn btn-danger"
+          href="/borrar?Id={{.Id}}"
+          role="button"
+          >Borrar</a
+        >
+      </td>
+    </tr>
 
-{{template "pie"}}
-{{end}}
+    {{end}}
+  </tbody>
+</table>
 
+{{template "pie"}} {{end}}
